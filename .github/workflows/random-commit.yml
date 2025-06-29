@@ -1,0 +1,30 @@
+name: Random Activity
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Runs daily at 6 AM UTC
+  workflow_dispatch:
+
+jobs:
+  random-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Generate random number (0-9)
+        id: random
+        run: echo "RANDOM_NUMBER=$((RANDOM % 10))" >> $GITHUB_ENV
+
+      - name: Show random number
+        run: echo "Random number was $RANDOM_NUMBER"
+
+      - name: Maybe commit (if number is 0-5)
+        if: ${{ env.RANDOM_NUMBER <= 5 }}
+        run: |
+          echo "Logging activity at $(date)" >> activity.txt
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add activity.txt
+          git commit -m "Random activity $(date)"
+          git push

@@ -19,12 +19,12 @@ jobs:
       - name: Show random number
         run: echo "Random number was $RANDOM_NUMBER"
 
-      - name: Maybe commit (if number is 0-5)
+      - name: Maybe commit (if number is 0–5)
         if: ${{ env.RANDOM_NUMBER <= 5 }}
         run: |
           echo "Logging activity at $(date)" >> activity.txt
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Bot"
+          git config --global user.email "bot@example.com"
           git add activity.txt
           git commit -m "Random activity $(date)"
-          git push
+          git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git

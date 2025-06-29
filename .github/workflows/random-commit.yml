@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false   # Important! Disable default token so we can use PAT
 
       - name: Generate random number (0-9)
         id: random
@@ -19,7 +21,7 @@ jobs:
       - name: Show random number
         run: echo "Random number was $RANDOM_NUMBER"
 
-      - name: Maybe commit (if number is 0–5)
+      - name: Maybe commit (if number is 0-5)
         if: ${{ env.RANDOM_NUMBER <= 5 }}
         run: |
           echo "Logging activity at $(date)" >> activity.txt
@@ -27,4 +29,5 @@ jobs:
           git config --global user.email "bot@example.com"
           git add activity.txt
           git commit -m "Random activity $(date)"
-          git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:main

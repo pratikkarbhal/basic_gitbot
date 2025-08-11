@@ -21,8 +21,8 @@ jobs:
       - name: Show random number
         run: echo "Random number was $RANDOM_NUMBER"
 
-      - name: Maybe commit (if number is 0-5)
-        if: ${{ env.RANDOM_NUMBER <= 5 }}
+      - name: Maybe commit (if number is 0-4)
+        if: ${{ env.RANDOM_NUMBER <= 4 }}
         run: |
           echo "Logging activity at $(date)" >> activity.txt
           git config --global user.name "Pratik Karbhal"

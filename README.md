@@ -10,7 +10,7 @@ This is a GitHub Actions workflow that helps keep your GitHub profile active by 
 
 - Runs every day at 6 AM UTC
 - Picks a random number from 0 to 9
-- If the number is 0 to 5, it makes a small commit to the repo
+- If the number is 0 to 3, it makes a commit to activity.txt in repo
 
 ## ⚙️ Setup
 
